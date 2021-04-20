@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptDetalleEquipojugadorvisitante" pageWidth="320" pageHeight="842" columnWidth="280" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0339438-8b81-4845-9676-a52ceb17d963">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="P_idpartido" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT jv.id_jugador, 
+       p.id_partido as partido,
+       dc.id_equipovisitante as idvisitante, 
+       ev.nombre as visitante,
+       jv.nombres as jugadorvisitante, 
+       dp.golpt as GPT, 
+       dp.golst as GST
+FROM partido p, 
+     detallecalendario dc, 
+     equipo ev,
+     calendario c, 
+     equipojugador ej, 
+     jugador jv, 
+     detallepartido dp
+WHERE p.id_partido = dp.id_partido
+AND p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_calendario = c.id_calendario
+AND dc.id_equipovisitante = ev.id_equipo
+AND ej.id_equipo = ev.id_equipo
+AND ej.id_jugador = jv.id_jugador
+AND dp.id_equipojugador = ej.id_equipojugador
+AND jv.id_jugador IN (SELECT j.id_jugador FROM partido pa, detallepartido detpa, equipojugador eqj, equipo e, jugador j
+                     WHERE pa.id_partido = detpa.id_partido
+                     AND detpa.id_equipojugador = eqj.id_equipojugador
+                     AND eqj.id_equipo = e.id_equipo
+                     AND eqj.id_jugador = j.id_jugador
+                     AND pa.id_partido = 31)
+AND p.id_partido = 31
+UNION
+SELECT DISTINCT jv.id_jugador, 
+       p.id_partido as partido,
+       dc.id_equipovisitante as idvisitante, 
+       ev.nombre as visitante,
+       jv.nombres as jugadorvisitante, 
+       0 as GPT, 
+       0 as GST
+FROM partido p, 
+     detallecalendario dc, 
+     equipo ev,
+     calendario c, 
+     equipojugador ej, 
+     jugador jv, 
+     detallepartido dp
+WHERE p.id_partido = dp.id_partido
+AND p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_calendario = c.id_calendario
+AND dc.id_equipovisitante = ev.id_equipo
+AND ej.id_equipo = ev.id_equipo
+AND ej.id_jugador = jv.id_jugador
+AND dp.id_equipojugador = ej.id_equipojugador
+AND jv.id_jugador NOT IN (SELECT j.id_jugador 
+                          FROM partido pa, detallepartido detpa, equipojugador eqj, equipo e, jugador j
+                          WHERE pa.id_partido = detpa.id_partido
+                     AND detpa.id_equipojugador = eqj.id_equipojugador
+                     AND eqj.id_equipo = e.id_equipo
+                     AND eqj.id_jugador = j.id_jugador
+                     AND pa.id_partido = 31)
+AND p.id_partido =  $P{P_idpartido}]]>
+	</queryString>
+	<field name="id_jugador" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_jugador"/>
+	</field>
+	<field name="partido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="partido"/>
+	</field>
+	<field name="idvisitante" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="idvisitante"/>
+	</field>
+	<field name="visitante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="visitante"/>
+	</field>
+	<field name="jugadorvisitante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="jugadorvisitante"/>
+	</field>
+	<field name="GPT" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="GPT"/>
+	</field>
+	<field name="GST" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="GST"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="35" y="12" width="89" height="17" uuid="2450b7d2-34c6-4dad-9d53-c43e0a0b0150">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="20" width="26" height="14" uuid="f2b4d0ab-4306-4a5a-9cc4-d5776d28a872">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="20" width="28" height="14" uuid="ec3b32fa-48d6-4e82-9ec7-f575c564d183">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="2" width="69" height="14" uuid="b90b34ba-b9f4-4f25-acc9-0f4aae2ad9cb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GOLES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-15" y="0" width="266" height="1" uuid="17e7cc58-2c90-4784-a685-81cae6fe2f98">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="251" y="0" width="1" height="37" uuid="fb03cde8-94af-4d81-b0a9-ced7cd300a26">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="-15" y="0" width="1" height="37" uuid="d846ef84-c6cd-4ccc-b03f-b8b604989901">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="168" y="0" width="1" height="37" uuid="0d7b4f47-35d3-4106-85ff-2f9db98f5881">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="168" y="18" width="83" height="1" uuid="deed7649-fe53-4836-9c36-7f37ecb271c2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="211" y="18" width="1" height="19" uuid="6558fa4c-6d28-4cfe-93d4-13495a04ec2e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="-15" y="36" width="266" height="1" uuid="54d73e81-e55d-49b1-b5ee-ca5e0fb876e6">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<line>
+				<reportElement x="-15" y="-1" width="1" height="19" uuid="6f5ecbbf-da72-4289-a2fa-4afd4f2db479">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="-15" y="18" width="267" height="1" uuid="9e7b0c51-0bde-4762-b262-cb7e048b1da0">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="168" y="-1" width="1" height="19" uuid="7b99170c-3591-4bef-aace-cc459ae8474d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="211" y="-1" width="1" height="19" uuid="3a6b2146-4e76-42a9-8ca5-9aa5ca26522c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="251" y="-1" width="1" height="19" uuid="83b40fce-ddd1-4c9f-a01c-8463b66c77ab">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="-11" y="2" width="173" height="14" uuid="9cc5c90b-ce28-4f7d-bd0e-7f40f7ae2a8c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a428d9a3-47d4-4d4f-b318-0fc08c7dd2f1"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{jugadorvisitante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="2" width="19" height="13" uuid="687461ad-e578-449a-a10a-cfd35de64ebf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="150d626c-28ce-45ae-8056-7e5914d7817c"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GPT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="2" width="14" height="13" uuid="63635982-b2aa-487d-97f5-ebfcaff3e4ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="edc5dbdb-f114-4111-ba70-aab8aafca2bc"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GST}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

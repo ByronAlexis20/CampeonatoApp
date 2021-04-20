@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptDetalleEquipojugadorLocal" pageWidth="350" pageHeight="842" columnWidth="310" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bab568e-c66b-4db6-b0c7-86f64629ee02">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="Pid_partido" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT jl.id_jugador, 
+       p.id_partido as partido,
+       dc.id_equipolocal as idlocal, 
+       el.nombre as local,
+       jl.nombres as jugadorlocal, 
+       dp.golpt as GPT, 
+       dp.golst as GST
+FROM partido p, 
+     detallecalendario dc, 
+     equipo el,
+     calendario c, 
+     equipojugador ej, 
+     jugador jl, 
+     detallepartido dp
+WHERE p.id_partido = dp.id_partido
+AND p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_calendario = c.id_calendario
+AND dc.id_equipolocal = el.id_equipo
+AND ej.id_equipo = el.id_equipo
+AND ej.id_jugador = jl.id_jugador
+AND dp.id_equipojugador = ej.id_equipojugador
+AND jl.id_jugador IN (SELECT j.id_jugador FROM partido pa, detallepartido detpa, equipojugador eqj, equipo e, jugador j
+                     WHERE pa.id_partido = detpa.id_partido
+                     AND detpa.id_equipojugador = eqj.id_equipojugador
+                     AND eqj.id_equipo = e.id_equipo
+                     AND eqj.id_jugador = j.id_jugador
+                     AND pa.id_partido = 31)
+AND p.id_partido = 31
+UNION
+SELECT DISTINCT jl.id_jugador, 
+       p.id_partido as partido,
+       dc.id_equipolocal as idlocal, 
+       el.nombre as local,
+       jl.nombres as jugadorlocal, 
+       0 as GPT, 
+       0 as GST
+FROM partido p, 
+     detallecalendario dc, 
+     equipo el,
+     calendario c, 
+     equipojugador ej, 
+     jugador jl, 
+     detallepartido dp
+WHERE p.id_partido = dp.id_partido
+AND p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_calendario = c.id_calendario
+AND dc.id_equipolocal = el.id_equipo
+AND ej.id_equipo = el.id_equipo
+AND ej.id_jugador = jl.id_jugador
+AND dp.id_equipojugador = ej.id_equipojugador
+AND jl.id_jugador NOT IN (SELECT j.id_jugador 
+                          FROM partido pa, detallepartido detpa, equipojugador eqj, equipo e, jugador j
+                          WHERE pa.id_partido = detpa.id_partido
+                     AND detpa.id_equipojugador = eqj.id_equipojugador
+                     AND eqj.id_equipo = e.id_equipo
+                     AND eqj.id_jugador = j.id_jugador
+                     AND pa.id_partido = 31)
+AND p.id_partido =  $P{Pid_partido}]]>
+	</queryString>
+	<field name="id_jugador" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_jugador"/>
+	</field>
+	<field name="partido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="partido"/>
+	</field>
+	<field name="idlocal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="idlocal"/>
+	</field>
+	<field name="local" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="local"/>
+	</field>
+	<field name="jugadorlocal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="jugadorlocal"/>
+	</field>
+	<field name="GPT" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="GPT"/>
+	</field>
+	<field name="GST" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="GST"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="52" y="12" width="89" height="17" uuid="bc0c0cb6-bf20-40cf-bda3-02265d58e60b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="20" width="26" height="14" uuid="13909e19-a1ba-40ca-abeb-78c75551f4a5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="20" width="28" height="14" uuid="3c301ea9-d3d3-45ea-a3bd-9c0c3d14ea9e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="2" width="69" height="14" uuid="3b173ea2-30de-43cb-bce9-de95f512df2b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GOLES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="0" width="266" height="1" uuid="61f5822e-38d2-4bcc-8253-02146bcd4808">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="268" y="0" width="1" height="37" uuid="ef993dcf-d1fa-4610-9e4f-4651d9a99c09">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="2" y="0" width="1" height="37" uuid="5d1ab2fb-44db-461a-a52e-5ef5d72e6f11">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="185" y="0" width="1" height="37" uuid="77b58052-b05f-47c5-b0dd-77cd61e4204f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="185" y="18" width="83" height="1" uuid="9fdbb9c1-8752-4143-a79e-8cd6ca552cdc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="228" y="18" width="1" height="19" uuid="aa873742-0313-48f2-8d1c-4884ef742712">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="2" y="36" width="266" height="1" uuid="63cb3271-5697-4fc2-a8ae-dbcc8e33592c">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="10" y="0" width="169" height="16" uuid="9648ec00-9a70-4b00-aa1e-c7c7efadbb5d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea261525-4ee5-4507-9884-82ee5b8cacbd"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{jugadorlocal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="1" width="20" height="13" uuid="767a9480-d652-40f5-b745-c088751f2dbc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ced64c30-53c5-4924-afba-dc8b76c78183"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GPT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="238" y="1" width="20" height="13" uuid="6cee5cb5-3baa-44b2-be9d-02527dd1b4e1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0df5ae91-cad7-44f0-b045-dcaccc3f12d4"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GST}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="268" y="-1" width="1" height="20" uuid="b5a48f64-e3e1-41df-a78a-998dd969e7df">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="228" y="-1" width="1" height="20" uuid="d8e010f0-4176-407a-bb90-04f187592bfa">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="185" y="-1" width="1" height="20" uuid="fb8f212d-c2bb-4272-8949-5cd325cc0b1b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="2" y="-1" width="1" height="20" uuid="87465b4b-019a-4fb1-88b8-99370701ff77">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="2" y="18" width="267" height="1" uuid="aebe5038-aa75-458c-806c-9abdf776091f">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

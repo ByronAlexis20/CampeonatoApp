@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCronograma" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="48dff39c-1f7c-4cb2-be4a-2cd4c23971ee">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="nombreCampeonatocal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT l.nombreCancha as cancha, 
+	   m.descripcion as modalidad,
+       dc.grupo as grupo,
+	   dc.fecha as fecha, 
+	   dc.hora as hora,
+       el.nombre as eLocal, 
+       ev.nombre as eVisitante
+FROM detallecalendario dc, lugarpartido l, 
+	 calendario c, modalidad m, 
+     equipo el, equipo ev, campeonato camp
+WHERE dc.id_lugarP = l.id_lugarP
+AND dc.id_calendario = c.id_calendario
+AND c.id_modalidad = m.id_modalidad
+AND dc.id_equipolocal = el.id_equipo
+AND dc.id_equipovisitante = ev.id_equipo
+AND c.id_campeonato = camp.id_campeonato
+AND camp.nombreC =  $P{nombreCampeonatocal} 
+ORDER BY fecha]]>
+	</queryString>
+	<field name="cancha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cancha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lugarpartido"/>
+	</field>
+	<field name="modalidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="modalidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="modalidad"/>
+	</field>
+	<field name="grupo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grupo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detallecalendario"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detallecalendario"/>
+	</field>
+	<field name="hora" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.label" value="hora"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detallecalendario"/>
+	</field>
+	<field name="eLocal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="eLocal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="equipo"/>
+	</field>
+	<field name="eVisitante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="eVisitante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="equipo"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<staticText>
+				<reportElement x="209" y="9" width="329" height="26" uuid="13b1ffcd-30fd-46b1-9927-d5fff3432caf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liga Deportiva Cantonal de Salinas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="35" width="195" height="13" uuid="8929b59e-3cfd-44c2-a62d-7d9fcc67b827"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[FUNDADA EL 7 DE AGOSTO DE 1947]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="48" width="296" height="14" uuid="721a2352-2185-4788-88ae-024ac90f27a2"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AFILIADA A LA FEDERACIÓN DEPORTIVA DE SANTA ELENA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="62" width="311" height="24" uuid="ca8ad8d5-6c22-45e7-83f2-e653bb3c316f"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Avenida Carlos Espinoza Larrea - Estadio 'Dr. Camilo Gallegos'
+Teléfono: 2776324 - Email: ligadeportivacantonalsalinas@hotmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="86" width="230" height="14" uuid="a4f680b5-dfc3-4180-b429-b7f4de0dfcaf"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salinas - Provincia de Santa Elena - Ecuador]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="600" y="98" width="86" height="17" uuid="505e79f8-18ff-4cb4-bf1c-b9577eb9593c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="120" y="11" width="70" height="99" uuid="0b1f654b-ca85-4b86-befb-3df7b5a9d159"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="548" y="27" width="152" height="54" uuid="c2916ee7-0260-4d0e-b7c2-92efccd0eca2"/>
+				<imageExpression><![CDATA["logo ministerio3.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="42" y="8" width="101" height="18" uuid="273b00c7-2d2f-4ba4-b9ee-5350bafb2f13"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAMPEONATO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="55" width="211" height="18" uuid="989541bf-9396-4ee9-9159-059e38fab865"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[CRONOGRAMA DE JUEGOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="16" width="90" height="18" uuid="04220b0f-532b-4603-9459-6fa333d74956"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODALIDAD :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="29" width="68" height="18" uuid="a76f7299-7a3d-46e3-890f-6a85b6213924"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADIO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="131" y="30" width="280" height="16" uuid="40b39f20-a1b5-4c4e-a20c-c4ddc51d0ca0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a2de203d-8d58-4dd4-b9b5-923b623ec4d1"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cancha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="585" y="16" width="150" height="18" uuid="ad466d18-5dbc-4b47-be97-d9fc04c451e2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9f29045-4e51-4acd-88fe-ba9554ca1f25"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modalidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="8" width="278" height="18" uuid="2d2d23d5-c281-47ad-9077-7b59ec13d0c3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreCampeonatocal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="2" width="64" height="16" uuid="4e628ed0-5624-42ec-83c2-119c9a317dc8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a9faf4-6147-4b25-a3c6-d50d8d59bd91"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRUPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="2" width="64" height="16" uuid="b945eafd-e49e-49a9-9abe-94bbce70a02f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a9faf4-6147-4b25-a3c6-d50d8d59bd91"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="3" width="64" height="16" uuid="6d2b3952-1d80-46d5-868f-e5fbe4299b62">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a9faf4-6147-4b25-a3c6-d50d8d59bd91"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOCAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="614" y="3" width="64" height="16" uuid="1c8cd40f-3773-4f8c-a2ad-edb00e43007c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a9faf4-6147-4b25-a3c6-d50d8d59bd91"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VISITANTE
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="3" width="64" height="16" uuid="6deba3c3-4af1-4c4f-97fc-26ab9a2a6468">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a9faf4-6147-4b25-a3c6-d50d8d59bd91"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="40" y="1" width="705" height="1" uuid="d1a56dd6-0ec9-49f1-b4df-b906402b0b83">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="40" y="21" width="705" height="1" uuid="9d981449-effe-421a-9d9b-5684775213fd">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="745" y="1" width="1" height="20" uuid="2b809ad3-fce4-4cb6-879e-3ec6e7b47c7e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="554" y="1" width="1" height="20" uuid="ff720cd7-1d77-4138-b0af-8d9cc1cbb5d3"/>
+			</line>
+			<line>
+				<reportElement x="356" y="1" width="1" height="20" uuid="d8267b36-a1a4-450f-9d3e-68c8a6aaca88">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="263" y="1" width="1" height="20" uuid="d443bb23-1562-4f4b-bf96-59326af24dbe">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="153" y="1" width="1" height="20" uuid="12dc2ce8-8b75-4d2f-b174-da87ccc352c5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="40" y="1" width="1" height="20" uuid="4b6d3496-6e87-483a-b07e-634eff6bee05">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="53" y="4" width="78" height="17" uuid="a5f5b999-716e-4e3b-aaf3-7a1529225d02">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a9faf4-6147-4b25-a3c6-d50d8d59bd91"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="161" y="4" width="90" height="17" uuid="dd0a3447-7c69-4750-92cd-989684e8214e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68c8a029-496f-4581-b14e-009cf2068e9e"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="4" width="180" height="17" uuid="616b7b34-2a71-4c23-adbf-27ffc5263228">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8b4a786a-f22d-49b0-b683-1e3a2fa6c4a0"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eLocal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="564" y="4" width="176" height="17" uuid="5ce83156-b43a-4435-a178-56cb37e23fcc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c8a66c0e-a374-4af6-98f0-f77cb27273fd"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eVisitante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="4" width="69" height="17" uuid="2dc43a77-68fd-42e6-a44c-49f5a376244f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a7706e07-0e7f-478a-80ff-9953113828ec"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="40" y="23" width="705" height="1" uuid="d701f478-eb5d-450a-8955-1fcd7edadf88">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="40" y="-1" width="1" height="24" uuid="4ecc06ba-7861-4a9c-9c37-a484ff1f8726"/>
+			</line>
+			<line>
+				<reportElement x="153" y="-1" width="1" height="24" uuid="bdb0d89e-5d57-4934-9203-d74bc75aa4c3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="263" y="-1" width="1" height="24" uuid="f8489754-b638-4289-aec5-7bafef26d2fe">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="356" y="-1" width="1" height="24" uuid="39ccefe9-39d9-4578-a76b-e9ab426a253e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="554" y="-1" width="1" height="24" uuid="d990fdf7-78af-4270-ae08-cc9c2155413c"/>
+			</line>
+			<line>
+				<reportElement x="745" y="-1" width="1" height="24" uuid="78a94d7d-8ba8-43e6-ae05-76dcfe87195d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="706" y="2" width="16" height="18" uuid="17a90267-ea3d-450f-9dd1-3bf7670d668b"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="732" y="2" width="11" height="18" uuid="48a49434-072a-4da6-96d9-dc627e0d6fa2"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="722" y="2" width="10" height="18" uuid="f77f408e-fd32-4fe5-94e6-472336519034"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="665" y="2" width="40" height="18" uuid="548830ff-3877-4dfd-9683-1ee87fc5c80d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,67 @@
+<?page title="Lista de Categorías" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<zk>
+	<window apply="org.zkoss.bind.BindComposer" border="none"
+		viewModel="@id('vm') @init('ec.edu.upse.gcf.listas.ConfiguracionjugadorLista')"
+		hflex="1" vflex="1" style="padding: 0 0 0 0;background:#FFFFFF;">
+		<vlayout vflex="1">
+			<groupbox>
+				<div align="center">
+					<label
+						value="Listado de límites de fechas de inscripción de jugadores en un nuevo campeonato "
+						style="color:red"
+						sclass="p-1 text-red font-italic font-weight-bold" />
+				</div>
+			</groupbox>
+			<hlayout>
+				<textbox value="@bind(vm.textoBuscar)" hflex="1"
+					placeholder="Busqueda por nombre de campeonatos"
+					style="text-transform:uppercase" />
+				<button label="Buscar!" iconSclass="z-icon-search"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onSelect="@command('marcarLista')" onClick="@command('buscar')" />
+				<button label="Nuevo" iconSclass="z-icon-plus"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('nuevo')" />
+				<button id="btnEditar" label="Editar"
+					iconSclass="z-icon-pencil"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('editar')" />
+				<button id="btnEliminar" label="Eliminar"
+					iconSclass="z-icon-trash-o"
+					zclass="btn btn-outline-danger btn btn-sm"
+					onClick="@command('eliminar')" />
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstconfiJugador"
+					model="@load(vm.confjugador)" autopaging="true" mold="paging"
+					selectedItem="@bind(vm.confjugadorseleccionada)" hflex="1"
+					vflex="1">
+					<listhead>
+						<listheader label="Campeonato"
+							style="background:#122BC7;" />
+						<listheader label="Fecha inicio"
+							style="background:#122BC7;" width="120px" align="center" />
+						<listheader label="Fecha Fin"
+							style="background:#122BC7;" width="100px" align="center" />
+						<listheader label="Estado"
+							style="background:#122BC7;" width="150px" align="center" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell
+								label="@load(each.campeonato.nombreC)" />
+							<listcell
+								label="@load(each.fechaInicio) @converter('formatedDate',format='dd/MM/yyyy')" />
+							<listcell
+								label="@load(each.fechaFin) @converter('formatedDate',format='dd/MM/yyyy')" />
+							<listcell label="@load(each.estadoconf)"
+								style="font-size:14px;color:red" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

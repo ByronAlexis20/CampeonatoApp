@@ -1,0 +1,653 @@
+<?page title="Resultado de partidos" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<zk>
+	<window id="winIngresoPartidoEditar" width="920px" height="650px"
+		style="padding: 0 0 0 0;background:#122BC7;"
+		apply="org.zkoss.bind.BindComposer" border="none" position="center"
+		mode="overlapped"
+		viewModel="@id('vm') @init('ec.edu.upse.gcf.editar.IngresoPartido')">
+		<caption label="Ingrese datos" height="20px"
+			sclass="p-1 text-white font-italic font-weight-bold" />
+		<vlayout vflex="1" hflex="1">
+			<groupbox>
+				<hlayout>
+					<div>
+						<label value="Estadio :"
+							sclass="font-weight-bold col-form-label" />
+						<label
+							value="@bind(vm.detallecalendario.lugarpartido.nombreCancha)" />
+					</div>
+					<space />
+					<div>
+						<label value="Fecha :"
+							sclass="font-weight-bold col-form-label" />
+						<label
+							value="@bind(vm.detallecalendario.fecha) @converter('formatedDate',format='dd/MM/yyyy')"
+							sclass="col-form-label" />
+					</div>
+					<space />
+					<div>
+						<label value="Hora :"
+							sclass="font-weight-bold col-form-label" />
+						<label
+							value="@bind(vm.detallecalendario.hora) @converter('formatedDate',format='hh:mm')"
+							sclass="col-form-label" />
+					</div>
+					<space spacing="10px" />
+					<div>
+						<label value="Categoría :"
+							sclass="font-weight-bold col-form-label" />
+					</div>
+					<div>
+						<label value="@bind(vm.categoria)"
+							sclass="font-weight-bold col-form-label" />
+					</div>
+				</hlayout>
+			</groupbox>
+			<groupbox>
+				<hlayout>
+					<div>
+						<label value="Campeonato :"
+							sclass="font-weight-bold col-form-label" />
+						<label id="lblCampeonato"
+							value="@bind(vm.detallecalendario.calendario.campeonato.nombreC)"
+							sclass="col-form-label" />
+					</div>
+					<space spacing="25px" />
+					<div>
+						<label id="lblEquipouno"
+							value="@bind(vm.detallecalendario.equipoLocal.nombre)"
+							sclass="font-weight-bold col-form-label" style="color:red" />
+					</div>
+					<space />
+					<div>
+						<label value=" VS "
+							sclass="font-weight-bold col-form-label" style="color:blue" />
+					</div>
+					<space />
+					<div>
+						<label id="lblEquipodos"
+							value="@bind(vm.detallecalendario.equipoVisitante.nombre)"
+							sclass="font-weight-bold col-form-label" style="color:red" />
+					</div>
+				</hlayout>
+				<hlayout>
+					<space spacing="470px" />
+					<div>
+						<intbox width="40px"
+							value="@bind(vm.partidoC.resultadoequipoL)" maxlength="2">
+
+						</intbox>
+					</div>
+					<space spacing="140px" />
+					<div>
+						<intbox width="40px"
+							value="@bind(vm.partidoC.resultadoequipoV)" maxlength="2">
+						</intbox>
+					</div>
+				</hlayout>
+			</groupbox>
+			<tabbox vflex="1" hflex="1">
+				<tabs>
+					<tab label="Goles Jugador" />
+					<tab label="Cambios Jugador" />
+					<tab label="Tarjetas Jugador" />
+					<tab label="Novedades" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<!-- *********************GOLES JUGADORES*************************** -->
+						<tabbox vflex="1" hflex="1">
+							<tabs>
+								<tab label="Equipo Local" />
+								<tab label="Equipo Visitante" />
+							</tabs>
+							<tabpanels>
+								<tabpanel hflex="1" vflex="1">
+									<vlayout hflex="1" vflex="1">
+										<div>
+											<button
+												label="Obtener Jugadores Equipo 1"
+												iconSclass="z-icon-search"
+												zclass="btn btn-outline-primary btn btn-sm"
+												onClick="@command('agregarGolesEquipouno')" />
+										</div>
+										<!-- *********************GOLES JUGADORES EQUIPO UNO*************************** -->
+										<hbox align="center"
+											vflex="1">
+											<listbox autopaging="true"
+												mold="paging" vflex="1" hflex="1"
+												model="@load(vm.detGolesEquipoLocal)">
+												<listhead>
+													<listheader
+														align="center" hflex="min" style="background:#122BC7;" />
+													<listheader
+														label="Jugadores Participantes" hflex="min"
+														style="background:#122BC7;" />
+													<listheader
+														label="GolPT" style="background:#122BC7;" hflex="1" />
+													<listheader
+														label="GolST" style="background:#122BC7;" hflex="1" />
+												</listhead>
+												<template name="model"
+													var="gl">
+													<listitem>
+														<listcell>
+															<a
+																iconSclass="z-icon-minus" zclass="badge badge-danger"
+																tooltiptext="Quitar"
+																onClick="@command('quitarGolesEquipoUno', detGolLocal = gl)" />
+														</listcell>
+														<listcell>
+															<combobox
+																hflex="1" model="@load(vm.golesEquipoLocal)"
+																readonly="true"
+																value="@bind(gl.equipojugador.jugador.nombres)"
+																selectedItem="@bind(gl.equipojugador)"
+																placeholder="Seleccione">
+																<template
+																	name="model" var="l">
+																	<comboitem
+																		label="@bind(l.jugador.nombres)" />
+																</template>
+															</combobox>
+														</listcell>
+														<listcell>
+															<intbox
+																value="@bind(gl.golpt)" hflex="1" height="25px" />
+
+														</listcell>
+														<listcell>
+															<intbox
+																value="@bind(gl.golst)" hflex="1" height="25px" />
+														</listcell>
+													</listitem>
+												</template>
+											</listbox>
+										</hbox>
+									</vlayout>
+								</tabpanel>
+								<!-- *********************GOLES JUGADORES EQUIPO DOS*************************** -->
+								<tabpanel>
+									<vlayout vflex="1" hflex="1">
+										<hlayout>
+
+											<space spacing="198px" />
+											<div>
+												<button
+													label="Obtener Jugadores Equipo 2"
+													iconSclass="z-icon-search"
+													zclass="btn btn-outline-primary btn btn-sm"
+													onClick="@command('agregarGolesEquipodos')" />
+											</div>
+										</hlayout>
+										<listbox autopaging="true"
+											mold="paging" vflex="1" hflex="1"
+											model="@load(vm.detGolesEquipoVisitante)">
+											<listhead>
+												<listheader
+													align="center" hflex="min" style="background:#122BC7;" />
+												<listheader
+													label="Jugadores Participantes" hflex="min"
+													style="background:#122BC7;" />
+												<listheader
+													label="GolPT" style="background:#122BC7;" hflex="1" />
+												<listheader
+													label="GolST" style="background:#122BC7;" hflex="1" />
+											</listhead>
+											<template name="model"
+												var="gd">
+												<listitem>
+													<listcell>
+														<a
+															iconSclass="z-icon-minus" zclass="badge badge-danger"
+															tooltiptext="Quitar"
+															onClick="@command('quitarGolesEquipodos', detGolVisitante = gd)" />
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.golesEquipoVisitante)"
+															readonly="true"
+															value="@bind(gd.equipojugador.jugador.nombres)"
+															selectedItem="@bind(gd.equipojugador)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ld">
+																<comboitem
+																	label="@bind(ld.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(gd.golpt)" hflex="1" height="25px" />
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(gd.golst)" hflex="1" height="25px" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</vlayout>
+								</tabpanel>
+							</tabpanels>
+						</tabbox>
+
+					</tabpanel>
+
+					<!-- *********************CAMBIOS JUGADORES*************************** -->
+					<tabpanel>
+						<tabbox vflex="1" hflex="1">
+							<tabs>
+								<tab label="Equipo 1" />
+								<tab label="Equipo 2" />
+							</tabs>
+							<tabpanels>
+								<tabpanel hflex="1" vflex="1">
+									<vlayout hflex="1" vflex="1">
+										<div>
+											<button label="Agregar"
+												iconSclass="z-icon-search"
+												zclass="btn btn-outline-primary btn btn-sm"
+												onClick="@command('agregarEuno')" />
+										</div>
+										<!-- *********************CAMBIOS JUGADORES EQUIPO UNO*************************** -->
+										<listbox vflex="1" hflex="1"
+											emptyMessage="No hay cambios"
+											model="@load(vm.cambioJugadorElocal)">
+											<listhead>
+												<listheader
+													align="center" hflex="min" style="background:#122BC7;" />
+												<listheader
+													label="Entra" hflex="1" style="background:#122BC7;" />
+												<listheader label="Sale"
+													style="background:#122BC7;" hflex="1" />
+												<listheader
+													label="Tiempo" style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="GOLPT" style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="GOLST" style="background:#122BC7;" hflex="min" />
+											</listhead>
+											<template name="model"
+												var="cl">
+												<listitem>
+													<listcell>
+														<a
+															iconSclass="z-icon-minus" zclass="badge badge-danger"
+															tooltiptext="Quitar"
+															onClick="@command('quitarEuno', cambioEuno = cl)" />
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.equipojugadores)"
+															readonly="true"
+															value="@bind(cl.equipojugador1.jugador.nombres)"
+															selectedItem="@bind(cl.equipojugador1)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="el">
+																<comboitem
+																	label="@bind(el.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.equipojugadoresdos)"
+															readonly="true"
+															value="@bind(cl.equipojugador2.jugador.nombres)"
+															selectedItem="@bind(cl.equipojugador2)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ejcl">
+																<comboitem
+																	label="@bind(ejcl.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<timebox
+															value="@bind(cl.tiempo)" height="25px" />
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(cl.golpt)" hflex="1" height="25px" />
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(cl.golst)" hflex="1" height="25px" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</vlayout>
+								</tabpanel>
+								<!-- *********************CAMBIOS JUGADORES EQUIPO DOS*************************** -->
+								<tabpanel>
+									<vlayout hflex="1" vflex="1">
+										<div>
+											<button label="Agregar"
+												iconSclass="z-icon-search"
+												zclass="btn btn-outline-primary btn btn-sm"
+												onClick="@command('agregarEdos')" />
+										</div>
+										<listbox vflex="1" hflex="1"
+											emptyMessage="No hay cambios"
+											model="@load(vm.cambioJugadorEVisitante)">
+											<listhead>
+												<listheader
+													align="center" hflex="min" style="background:#122BC7;" />
+												<listheader
+													label="Entra" hflex="1" style="background:#122BC7;" />
+												<listheader label="Sale"
+													style="background:#122BC7;" hflex="1" />
+												<listheader
+													label="Tiempo" style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="GOLPT" style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="GOLST" style="background:#122BC7;" hflex="min" />
+											</listhead>
+											<template name="model"
+												var="cv">
+												<listitem>
+													<listcell>
+														<a
+															iconSclass="z-icon-minus" zclass="badge badge-danger"
+															tooltiptext="Quitar"
+															onClick="@command('quitarEdos', cambioEdos = cv)" />
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.equipojugadoresCambiouno)"
+															readonly="true"
+															value="@bind(cv.equipojugador1.jugador.nombres)"
+															selectedItem="@bind(cv.equipojugador1)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ejcv">
+																<comboitem
+																	label="@bind(ejcv.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.equipojugadoresCambiodos)"
+															readonly="true"
+															value="@bind(cv.equipojugador2.jugador.nombres)"
+															selectedItem="@bind(cv.equipojugador2)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ejcvd">
+																<comboitem
+																	label="@bind(ejcvd.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<timebox
+															value="@bind(cv.tiempo)" height="25px" />
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(cv.golpt)" hflex="1" height="25px" />
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(cv.golst)" hflex="1" height="25px" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</vlayout>
+								</tabpanel>
+							</tabpanels>
+						</tabbox>
+					</tabpanel>
+					<!-- ***************************************TARJETA JUGADOR***************************************** -->
+					<tabpanel>
+						<tabbox vflex="1" hflex="1">
+							<tabs>
+								<tab label="Equipo 1" />
+								<tab label="Equipo 2" />
+							</tabs>
+							<tabpanels>
+								<tabpanel>
+									<vlayout hflex="1" vflex="1">
+										<hlayout>
+											<div>
+												<button label="Agregar"
+													iconSclass="z-icon-search"
+													zclass="btn btn-outline-primary btn btn-sm"
+													onClick="@command('agregarTarjetaEuno')" />
+											</div>
+										</hlayout>
+										<!-- ***************************************TARJETA JUGADOR EQUIPO UNO***************************************** -->
+										<listbox vflex="1" hflex="1"
+											emptyMessage="No hay sanciones de tarjetas"
+											model="@load(vm.tarjetaEquipoLocal)">
+											<listhead>
+												<listheader
+													align="center" hflex="min" style="background:#122BC7;" />
+												<listheader
+													label="Jugador" hflex="1" style="background:#122BC7;" />
+												<listheader
+													label="Tarjeta" style="background:#122BC7;" hflex="1" />
+												<listheader label="Cant"
+													style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="Tiempo" style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="Motivo" style="background:#122BC7;" hflex="1" />
+											</listhead>
+											<template name="model"
+												var="tl">
+												<listitem>
+													<listcell>
+														<a
+															iconSclass="z-icon-minus" zclass="badge badge-danger"
+															tooltiptext="Quitar"
+															onClick="@command('quitarTarjetaEuno', tarjetaEl = tl)" />
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.equipojugadoresTarjetaEuno)"
+															readonly="true"
+															value="@bind(tl.equipojugador.jugador.nombres)"
+															selectedItem="@bind(tl.equipojugador)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ejl">
+																<comboitem
+																	label="@bind(ejl.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.tarjetajugadoresEuno)"
+															readonly="true" value="@bind(tl.tarjeta.descripcion)"
+															selectedItem="@bind(tl.tarjeta)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ta">
+																<comboitem
+																	label="@bind(ta.descripcion)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(tl.cantidad)" width="100px" />
+													</listcell>
+													<listcell>
+														<timebox
+															value="@bind(tl.tiempo)" width="100px" />
+													</listcell>
+													<listcell>
+														<textbox
+															value="@bind(tl.motivo)" hflex="1" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</vlayout>
+								</tabpanel>
+								<!-- ***************************************TARJETA JUGADOR EQUIPO DOS***************************************** -->
+								<tabpanel hflex="1" vflex="1">
+									<vlayout hflex="1" vflex="1">
+										<hlayout>
+											<div>
+												<button label="Agregar"
+													iconSclass="z-icon-search"
+													zclass="btn btn-outline-primary btn btn-sm"
+													onClick="@command('agregarTarjetaEdos')" />
+											</div>
+										</hlayout>
+										<listbox vflex="1" hflex="1"
+											emptyMessage="No hay cambios"
+											model="@load(vm.tarjetaEquipoVisitante)">
+											<listhead>
+												<listheader
+													align="center" hflex="min" style="background:#122BC7;" />
+												<listheader
+													label="Jugador" hflex="1" style="background:#122BC7;" />
+												<listheader
+													label="Tarjeta" style="background:#122BC7;" hflex="1" />
+												<listheader label="Cant"
+													style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="Tiempo" style="background:#122BC7;" hflex="min" />
+												<listheader
+													label="Motivo" style="background:#122BC7;" hflex="1" />
+											</listhead>
+											<template name="model"
+												var="tv">
+												<listitem>
+													<listcell>
+														<a
+															iconSclass="z-icon-minus" zclass="badge badge-danger"
+															tooltiptext="Quitar"
+															onClick="@command('quitarTarjetaEdos', tarjetaEv = tv)" />
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.equipojugadoresTarjetaEdos)"
+															readonly="true"
+															value="@bind(tv.equipojugador.jugador.nombres)"
+															selectedItem="@bind(tv.equipojugador)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="ejv">
+																<comboitem
+																	label="@bind(ejv.jugador.nombres)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<combobox
+															hflex="1" model="@load(vm.tarjetajugadoresEdos)"
+															readonly="true" value="@bind(tv.tarjeta.descripcion)"
+															selectedItem="@bind(tv.tarjeta)"
+															placeholder="Seleccione">
+															<template
+																name="model" var="t">
+																<comboitem
+																	label="@bind(t.descripcion)" />
+															</template>
+														</combobox>
+													</listcell>
+													<listcell>
+														<intbox
+															value="@bind(tv.cantidad)" width="100px" />
+													</listcell>
+													<listcell>
+														<timebox
+															value="@bind(tv.tiempo)" width="100px" />
+													</listcell>
+													<listcell>
+														<textbox
+															value="@bind(tv.motivo)" hflex="1" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</vlayout>
+								</tabpanel>
+							</tabpanels>
+						</tabbox>
+					</tabpanel>
+
+					<!-- ***************************************NOVEDADES***************************************** -->
+					<tabpanel>
+						<vlayout>
+							<grid>
+								<columns>
+									<column align="right" hflex="min" />
+									<column align="left" hflex="1" />
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="Nombre Arbitro : * "
+											sclass="font-weight-bold col-form-label" />
+										<textbox id="nombreA" hflex="1"
+											style="text-transform:uppercase"
+											value="@bind(vm.partidoC.arbitro)" maxlength="255" />
+									</row>
+									<row>
+										<label
+											value="Novedad Arbitro Equipo Local: * "
+											sclass="font-weight-bold col-form-label" />
+										<textbox id="novedadA" hflex="1"
+											style="text-transform:uppercase"
+											value="@bind(vm.partidoC.novedadarbitrolocal)"
+											maxlength="255" />
+									</row>
+									<row>
+										<label
+											value="Novedad Arbitro Equipo Local: * "
+											sclass="font-weight-bold col-form-label" />
+										<textbox id="novedadAv" hflex="1"
+											style="text-transform:uppercase"
+											value="@bind(vm.partidoC.novedadarbitrovisitante)"
+											maxlength="255" />
+									</row>
+									<row>
+										<label value="Nombre Vocal : * "
+											sclass="font-weight-bold col-form-label" />
+										<textbox id="nombreV" hflex="1"
+											style="text-transform:uppercase"
+											value="@bind(vm.partidoC.vocal)" maxlength="255" />
+									</row>
+									<row>
+										<label
+											value="Novedad Vocal : * "
+											sclass="font-weight-bold col-form-label" />
+										<textbox id="novedadV" hflex="1"
+											style="text-transform:uppercase"
+											value="@bind(vm.partidoC.novedadvocal)" maxlength="255" />
+									</row>
+								</rows>
+							</grid>
+						</vlayout>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<div>
+				<button id="grabar" label="Grabar"
+					iconSclass="z-icon-save"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('grabar')" />
+				<button id="salir" label="Salir"
+					iconSclass="z-icon-sign-out"
+					zclass="btn btn-outline-danger btn btn-sm"
+					onClick="@command('salir')" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

@@ -1,0 +1,66 @@
+<?page title="Calendario" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<div apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('ec.edu.upse.gcf.listas.CalendarioLista')"
+	vflex="1" hflex="1">
+	<vlayout vflex="1" hflex="1">
+		<groupbox style="background:#EBEAEA;">
+			<div align="center">
+				<label
+					value="Listado de Calendario"
+					style="color:red"
+					sclass="p-1 text-red font-italic font-weight-bold" />
+			</div>
+		</groupbox>
+		<div hflex="1">
+			<button label="Nuevo" iconSclass="z-icon-plus"
+				onClick="@command('nuevo')"
+				zclass="btn btn-outline-primary btn btn-sm" autodisable="true" />
+			<button label="Editar" iconSclass="z-icon-pencil"
+				onClick="@command('editar')" disabled="@bind(empty vm.calendario)"
+				zclass="btn btn-outline-info btn btn-sm" />
+			<button label="Eliminar" iconSclass="z-icon-trash-o"
+				onClick="@command('eliminar')" disabled="@bind(empty vm.calendario)"
+				zclass="btn btn-outline-danger btn btn-sm" />
+		</div>
+		<div>
+			<hlayout valign="middle">
+				<textbox value="@bind(vm.textoBuscar)"
+					placeholder="Ingrese el texto a buscar !" hflex="1"
+					onOK="@command('buscar')" />
+				<button width="100px" iconSclass="z-icon-search"
+					label="Buscar" onClick="@command('buscar')"
+					zclass="btn btn-outline-primary btn btn-sm" />
+			</hlayout>
+		</div>
+		<div hflex="1" vflex="1">
+			<listbox model="@bind(vm.calendarios)"
+				selectedItem="@bind(vm.calendario)" mold="paging" autopaging="true"
+				hflex="1" vflex="1" emptyMessage="No se encontró resultado !">
+				<listhead sizable="true">
+					<listheader label="Campeonato" hflex="1"
+						style="background:#122BC7;" />
+					<listheader label="Modalidad" hflex="1"
+						style="background:#122BC7;" />
+					<listheader label="Fecha Registro" hflex="1"
+						style="background:#122BC7;" />
+					<listheader hflex="1" style="background:#122BC7;" />
+				</listhead>
+				<template name="model" var="c">
+					<listitem>
+						<listcell label="@bind(c.campeonato.nombreC)" />
+						<listcell
+							label="@bind(c.modalidad.descripcion)" />
+						<listcell
+							label="@bind(c.fechaRegistro) @converter('formattedDate', format='yyyy/MM/dd')" />
+						<listcell>
+							<a iconSclass="z-icon-download"
+								tooltiptext="Descargar" zclass="badge badge-success" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		</div>
+	</vlayout>
+</div>

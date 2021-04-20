@@ -1,0 +1,82 @@
+<?page title="Asignaci�n de perfiles a usuarios" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<zk>
+	<window id="winConfiguracionjugador" border="none" width="560px"
+		vflex="1" style="padding: 0 0 0 0;background:#122BC7;"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('ec.edu.upse.gcf.editar.ConfiguracionEditar')">
+		<caption label="Ingrese datos" height="20px"
+			sclass="p-0 mb-0 text-white font-italic font-weight-bold" />
+		<vlayout>
+			<groupbox>
+				<vlayout>
+					<div>
+						<label value="Campeonato : *"
+							sclass="font-weight-bold col-form-label" />
+						<combobox id="cboCampeonato"
+							model="@load(vm.campeonatos)" style="text-transform:uppercase"
+							placeholder="Seleccione Campeonato"
+							selectedItem="@bind(vm.configuracionjugador.campeonato)"
+							value="@load(vm.configuracionjugador.campeonato.nombreC)"
+							hflex="1" />
+					</div>
+					<hlayout>
+						<div>
+							<label value="Inicio de campeonato: "
+								sclass="font-weight-bold col-form-label" />
+						</div>
+						<div align="center">
+							<label
+								value="@bind(vm.configuracionjugador.campeonato.fechaInicio) @converter('formatedDate',format='dd/MM/yyyy') "
+								style="color:red" />
+						</div>
+					</hlayout>
+				</vlayout>
+			</groupbox>
+			<groupbox>
+				<div align="center">
+					<div>
+						<image src="/img/advert.png" />
+						<label
+							value="La fecha límite de inscripción jugadores debe iniciar y culminar antes de la fecha del campeonato"
+							style="font-size:11px;color:red" />
+					</div>
+
+				</div>
+			</groupbox>
+			<grid>
+				<columns>
+					<column align="right" hflex="min" />
+					<column align="left" hflex="1" />
+				</columns>
+				<rows>
+					<row>
+						<label value="Fecha Inicio : *"
+							sclass="font-weight-bold col-form-label" />
+						<datebox id="fechaInicio"
+							disabled="@bind(empty vm.configuracionjugador.campeonato.nombreC)"
+							value="@bind(vm.configuracionjugador.fechaInicio)" hflex="1" />
+					</row>
+					<row>
+						<label value="Fecha Fin : *"
+							sclass="font-weight-bold col-form-label" />
+						<datebox id="fechaFin"
+							disabled="@bind(empty vm.configuracionjugador.campeonato.nombreC)"
+							value="@bind(vm.configuracionjugador.fechaFin)" onClick=""
+							hflex="1" />
+					</row>
+				</rows>
+			</grid>
+			<div>
+				<button label="Grabar" iconSclass="z-icon-save"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('grabar')" />
+				<button label="Salir" iconSclass="z-icon-sign-out"
+					zclass="btn btn-outline-danger btn btn-sm"
+					onClick="@command('salir')" />
+			</div>
+
+		</vlayout>
+	</window>
+</zk>

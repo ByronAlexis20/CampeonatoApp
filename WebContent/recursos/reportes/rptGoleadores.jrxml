@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGoleadores" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3a550e0d-8802-46e7-975e-1f62f061e784">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="nombreC" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT j.nombres as jugador, e.nombre as equipo,
+			(SUM(d.golpt) + SUM(d.golst)) as total
+FROM detallepartido d, equipojugador ej, equipo e, jugador j, partido p, 
+	 detallecalendario dc, calendario c, campeonato ca
+WHERE d.id_equipojugador = ej.id_equipojugador
+AND ej.id_equipo = e.id_equipo
+AND ej.id_jugador = j.id_jugador
+AND d.id_partido = p.id_partido
+AND p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_calendario = c.id_calendario
+AND c.id_campeonato = ca.id_campeonato
+AND ca.id_campeonato = 3
+GROUP BY j.nombres 
+UNION
+SELECT j.nombres as jugador, e.nombre as equipo,
+			(SUM(cb.golpt) + SUM(cb.golst)) as total
+FROM cambios cb, equipojugador ej, equipo e, jugador j, partido p, 
+	 detallecalendario dc, calendario c, campeonato ca
+WHERE cb.id_equipojugadorentra = ej.id_equipojugador
+AND ej.id_equipo = e.id_equipo
+AND ej.id_jugador = j.id_jugador
+AND cb.id_partido = p.id_partido
+AND p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_calendario = c.id_calendario
+AND c.id_campeonato = ca.id_campeonato
+AND cb.golpt IS NOT NULL
+AND cb.golst IS NOT NULL
+AND ca.nombreC = $P{nombreC} 
+GROUP BY j.nombres 
+ORDER BY total DESC]]>
+	</queryString>
+	<field name="jugador" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="jugador"/>
+	</field>
+	<field name="equipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="equipo"/>
+	</field>
+	<field name="total" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="0" width="100" height="30" uuid="0f18c20e-1792-4121-a7d7-316c37e0fc1f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a76e6d8-ab48-40ec-9885-2db301d7c89b"/>
+				</reportElement>
+				<text><![CDATA[jugador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="0" width="100" height="30" uuid="916e8714-e5e7-4b1c-9c6d-5e9d1946a53a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="04684ff5-7eec-4721-b371-6969181740c5"/>
+				</reportElement>
+				<text><![CDATA[equipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="0" width="100" height="30" uuid="ee2bf92f-3ff0-48a8-a679-ce9bfa4aa369">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9cbf175-f641-400f-a737-cafd5c66a3a4"/>
+				</reportElement>
+				<text><![CDATA[total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="150" y="40" width="100" height="30" uuid="e46a8ecf-60ca-40a7-8d4e-50b4d0eb7c37">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a76e6d8-ab48-40ec-9885-2db301d7c89b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{jugador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="40" width="100" height="30" uuid="68cee636-2ed2-43b3-9a01-d3794a73b062">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="04684ff5-7eec-4721-b371-6969181740c5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{equipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="53" width="100" height="30" uuid="51f25369-3d9a-4d21-bf28-10cb5a4f3fcc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9cbf175-f641-400f-a737-cafd5c66a3a4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

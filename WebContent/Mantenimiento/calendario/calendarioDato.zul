@@ -1,0 +1,121 @@
+<?page title="Calendario Dato" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<window position="center"
+		mode="embedded"
+		width="900px"
+		height="640px"
+		border="normal"
+		style="padding: 0 0 0 0;background:#122BC7;"
+        apply="org.zkoss.bind.BindComposer"
+	  	viewModel="@id('vm') @init('ec.edu.upse.gcf.editar.CalendarioDato')">
+	<caption label="Ingrese datos" 
+			 height="20px"
+			 sclass="p-1 mb text-white font-italic font-weight-bold" />
+	<vlayout hflex="1" 
+			 vflex="1">
+		<!-- Datos del calendario -->
+		<div class="card">
+			<div class="card-heading" style="background:#F2F2F2;">
+				<separator spacing="5px" />
+				<hlayout>
+					<separator spacing="5px" />
+					<label
+						style="font-family:Trebuchet MS;color:#585858;"
+						value="Datos de Calendario" />
+				</hlayout>
+				<separator spacing="5px" />
+			</div>
+			<div style="padding:5px;">				 
+				<vlayout>
+					<hlayout valign="middle" style="padding-left:39px;" >   
+						<label value="Campeonato :"
+						       sclass="font-weight-bold col-form-label"  />
+						<label value="@bind(vm.calendario.campeonato.nombreC)" /> 						
+					</hlayout>
+					<hlayout valign="middle">
+						<label value="Tipo Campeonato : " 
+						       sclass="font-weight-bold col-form-label"  />
+						<label value="@bind(vm.tipoCampeonato)" /> 
+						<hlayout valign="middle" style="padding-left:210px;">
+							<label value="Categoria : "
+							       sclass="font-weight-bold col-form-label"  />
+							<label value="@bind(vm.categoria)" /> 
+						</hlayout>
+					</hlayout>	  
+					<hlayout valign="middle" style="padding-left:55px;">
+						<label value="Modalidad : "
+						       sclass="font-weight-bold col-form-label"  />
+						<label value="@bind(vm.calendario.modalidad.descripcion)" /> 
+						<hlayout valign="middle" style="padding-left:185px;">
+							<label value="Fecha de Registro : "
+							       sclass="font-weight-bold col-form-label"  />
+							<label value="@bind(vm.calendario.fechaRegistro) @converter('formattedDate', format='yyyy/MM/dd')" /> 
+						</hlayout>
+					</hlayout>
+				</vlayout>
+			</div>
+		</div>	
+		<div vflex="1" hflex="1">	
+			<!-- equipo - calendario -->
+			<tabbox  vflex="1" hflex="1">
+				<tabs>
+					<tab label="Equipo" />
+					<tab id="tabGrupo" label="Grupo"/>
+					<tab id="tabCalendar" label="Calendario" />					
+				</tabs>
+				<tabpanels >
+					<!-- contenido del primer tab -->
+					<tabpanel >
+						<tree id="equipo" 
+							  hflex="1"
+							  vflex="1"/>
+							   
+					</tabpanel>
+					<!-- contenido del segundo tab -->
+					<tabpanel vflex="1" hflex="1">
+					 <div vflex="1" 
+					      hflex="1"
+					      id="divlistaGrupo" /> 
+					</tabpanel> 
+										
+					<!-- contenido del tercer tab -->
+					<tabpanel vflex="1" hflex="1">
+						<vlayout vflex="1">
+							<div sclass="container-fluid">
+								<!-- datos calendario -->
+								<div sclass="row">
+									<div sclass="col">
+										 <label value="Fecha Inicio :" 
+										 	    sclass="font-weight-bold col-form-label" />
+										 <label value="@bind(vm.calendario.campeonato.fechaInicio) 
+										 			   @converter('formattedDate', format='yyyy/MM/dd')" />
+									</div>
+									<div sclass="col">
+										 <label value="Fecha Fin :" 
+										 		sclass="font-weight-bold col-form-label" />
+										 <label value="@bind(vm.calendario.campeonato.fechaFin) 
+										 			   @converter('formattedDate', format='yyyy/MM/dd')" />
+									</div>
+								</div> 								
+							</div>									
+							<!-- calendario -->
+							<vlayout  id="gridCalendar" hflex="1" vflex="1"/> 
+						</vlayout> 						 
+					</tabpanel>					
+				</tabpanels>
+			</tabbox>
+		</div>	
+		<!-- opciones -->
+		<hlayout valign="middle">
+			<button label="Guardar"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('grabar')"  
+					iconSclass="z-icon-check"/>
+			<button label="Salir"   
+					iconSclass="z-icon-sign-out" 
+					onClick="@command('salir')"   
+					zclass="btn btn-outline-danger btn btn-sm" />					
+		</hlayout> 
+	</vlayout>		 		  
+</window> 

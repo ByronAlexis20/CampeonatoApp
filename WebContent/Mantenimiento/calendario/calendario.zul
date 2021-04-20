@@ -1,0 +1,17 @@
+<?page title="Calendario" contentType="text/html;charset=UTF-8"?>
+<window border="normal" position="center" mode="embedded" width="1250px"
+	height="750px" style="padding: 0 0 0 0;background:#122BC7;"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('ec.edu.upse.gcf.editar.Calendario')">
+	<caption label="Datos de Calendario" height="20px"
+		sclass="p-1 mb text-white font-italic font-weight-bold" />
+	<vlayout vflex="1">
+		<!-- calendario -->
+		<vlayout id="gridCalendar" hflex="1" vflex="1" />
+		<!-- opciones -->
+		<hlayout valign="middle">
+			<button label="Salir" iconSclass="z-icon-sign-out"
+				onClick="@command('salir')" zclass="btn btn-outline-danger btn btn-sm" />
+		</hlayout>
+	</vlayout>
+</window>

@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//WebContent/recursos/reportes/rptCambiosjugadoreslocal.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptCambiosjugadoresvisitante.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptCronograma.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptDetalleEquipojugadorLocal.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptDetalleEquipojugadorvisitante.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptGoleadores.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptInscripcionEquipos.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptInscripcionJugadores.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptListadoEquipos.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptResultadoPartido.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptTablagoleadores.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptTablaposicion.jrxml=UTF-8
+encoding//WebContent/recursos/reportes/rptTarjetajugador.jrxml=UTF-8
+encoding/<project>=UTF-8

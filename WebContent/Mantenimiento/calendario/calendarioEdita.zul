@@ -1,0 +1,150 @@
+<?page title="Calendario" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<window position="center" border="normal" mode="embedded" width="900px"
+	height="640px" style="padding: 0 0 0 0;background:#122BC7;"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('ec.edu.upse.gcf.editar.CalendarioEditar')">
+	<caption label="Ingrese datos" height="20px"
+		sclass="p-1 mb text-white font-italic font-weight-bold" />
+	<vlayout vflex="1">
+		<!-- opciones del calendario -->
+		<div class="card">
+			<div class="card-heading" style="background:#F2F2F2;">
+				<separator spacing="5px" />
+				<hlayout>
+					<separator spacing="5px" />
+					<label
+						style="font-family:Trebuchet MS;color:#585858;"
+						value="Opciones de Calendario" />
+				</hlayout>
+				<separator spacing="5px" />
+			</div>
+			<div style="padding:5px;">
+				<vlayout>
+					<hlayout valign="middle">
+						<!-- combo campeoato -->
+						<label value="Campeonato :"
+							sclass="font-weight-bold col-form-label" />
+						<combobox hflex="1"
+							model="@load(vm.listaCampeonato)" readonly="true"
+							selectedItem="@bind(vm.campeonatoSeleccionado)"
+							placeholder="Seleccione el campeonato">
+							<template name="model" var="c">
+								<comboitem label="@bind(c.nombreC)" />
+							</template>
+						</combobox>
+
+						<!-- combo lugar de encuentro -->
+						<label value="Lugar : "
+							sclass="font-weight-bold col-form-label" />
+						<combobox hflex="1"
+							selectedItem="@bind(vm.lugarSeleccionado)"
+							disabled="@bind(empty vm.campeonatoSeleccionado)"
+							model="@load(vm.lugarEquipo)" readonly="true"
+							placeholder="Seleccione el lugar">
+							<template name="model" var="l">
+								<comboitem
+									label="@bind(l.nombreCancha)" />
+							</template>
+						</combobox>
+					</hlayout>
+					<hlayout valign="middle">
+						<!-- combo modalidad -->
+						<div>
+							<hlayout valign="middle">
+								<label value="Modalidad : "
+									sclass="font-weight-bold col-form-label" />
+								<combobox width="326px"
+									model="@load(vm.listaModalidad)"
+									disabled="@bind(empty vm.lugarSeleccionado)"
+									selectedItem="@bind(vm.modalidadSeleccionada)"
+									onSelect="@command('equipoCampeonato')" readonly="true"
+									placeholder="Seleccione la modalidad">
+									<template name="model" var="m">
+										<comboitem
+											label="@bind(m.descripcion)" />
+									</template>
+								</combobox>
+							</hlayout>
+						</div>
+						<hlayout valign="middle">
+							<label id="lblNumero"
+								value="Cantidad de Grupo :"
+								sclass="font-weight-bold col-form-label" />
+							<intbox id="txtNumero" width="50px"
+								onOK="@command('habilitar')" maxlength="2" />
+						</hlayout>
+					</hlayout>
+				</vlayout>
+			</div>
+		</div>
+
+		<!-- opciones -->
+		<hlayout valign="middle">
+			<button id="btnGenerar" label="Generar"
+				zclass="btn btn-outline-primary btn btn-sm"
+				onClick="@command('generar')" iconSclass="z-icon-spinner" />
+			<button id="btnGuardar" label="Guardar"
+				zclass="btn btn-outline-success btn btn-sm"
+				iconSclass="z-icon-check" />
+			<button label="Salir" iconSclass="z-icon-sign-out"
+				onClick="@command('salir')"
+				zclass="btn btn-outline-danger btn btn-sm" />
+		</hlayout>
+
+		<!-- equipo - calendario -->
+		<tabbox vflex="1" hflex="1">
+			<tabs>
+				<tab label="Equipo" />
+				<tab id="tabGrupo" label="Grupo" />
+				<tab id="tabCalendar" label="Calendario" />
+			</tabs>
+			<tabpanels>
+				<!-- contenido del primer tab -->
+				<tabpanel>
+					<tree id="equipo" hflex="1" vflex="1" />
+
+				</tabpanel>
+				<!-- contenido del segundo tab -->
+				<tabpanel vflex="1" hflex="1">
+					<div vflex="1" hflex="1" id="divlistaGrupo" />
+				</tabpanel>
+
+				<!-- contenido del tercer tab -->
+				<tabpanel vflex="1" hflex="1">
+					<vlayout vflex="1">
+						<div sclass="container-fluid">
+							<!-- datos calendario -->
+							<div sclass="row">
+								<div sclass="col">
+									<label value="Fecha Inicio :"
+										sclass="font-weight-bold col-form-label" />
+									<label
+										value="@bind(vm.campeonatoSeleccionado.fechaInicio) 
+										 			   @converter('formattedDate', format='yyyy/MM/dd')" />
+								</div>
+								<div sclass="col">
+									<label value="Fecha Fin :"
+										sclass="font-weight-bold col-form-label" />
+									<label
+										sclass="font-weight-bold col-form-label" />
+								</div>
+							</div>
+						</div>
+						<!-- calendario -->
+						<div align="center">
+							<label
+								value="Para una mejor visualización del calendario haga clic aqui " />
+						</div>
+						<div align="center">
+							<button iconSclass="z-icon-eye"
+								label="Ver calendario" onClick="@command('showCalendar')" />
+						</div>
+					</vlayout>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+
+	</vlayout>
+</window>

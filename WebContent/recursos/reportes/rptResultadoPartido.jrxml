@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptResultadoPartido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="201d0a1f-3dad-4bab-bc2a-5bdd11f22cbf">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="P_idpartido" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT p.id_partido as partido, l.nombreCancha as cancha, p.fecha as fecha,
+		p.hora as hora, cat.nombre as nomcategoria,
+        el.nombre as local, p.resultadoequipoL as golesl,
+        ev.nombre as visitante, p.resultadoequipoV as golesv,
+         p.novedadarbitrolocal as novedadArbitroLocal,
+        p.novedadarbitrovisitante as novedadArbitroVisitante,
+        p.novedadvocal as novedadVocal,
+        p.arbitro as arbitro, p.vocal as vocal
+FROM partido p, detallecalendario dc, lugarpartido l, equipo el, equipo ev, calendario c, campeonato ca, 
+detallecampeonato dcamp, categoria cat
+WHERE p.id_detallecalendario = dc.id_detallecalendario
+AND dc.id_lugarP = l.id_lugarP
+AND dc.id_equipolocal = el.id_equipo
+AND dc.id_equipovisitante = ev.id_equipo
+AND dc.id_calendario = c.id_calendario
+AND c.id_campeonato = ca.id_campeonato
+AND dcamp.id_campeonato = ca.id_campeonato
+AND dcamp.id_categoria = cat.id_categoria
+AND p.id_partido =  $P{P_idpartido} 
+GROUP BY p.id_partido, l.nombreCancha, p.fecha, p.hora, cat.nombre,
+        el.nombre, p.resultadoequipoL, ev.nombre, 
+        p.resultadoequipoV]]>
+	</queryString>
+	<field name="partido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="partido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="cancha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cancha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lugarpartido"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="hora" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.label" value="hora"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="nomcategoria" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomcategoria"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categoria"/>
+	</field>
+	<field name="local" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="local"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="equipo"/>
+	</field>
+	<field name="golesl" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="golesl"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="visitante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="visitante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="equipo"/>
+	</field>
+	<field name="golesv" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="golesv"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="novedadArbitroLocal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="novedadArbitroLocal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="novedadArbitroVisitante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="novedadArbitroVisitante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="novedadVocal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="novedadVocal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="arbitro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="arbitro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<field name="vocal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vocal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partido"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="143" splitType="Stretch">
+			<staticText>
+				<reportElement x="91" y="10" width="329" height="26" uuid="c7073bbc-c7bd-4441-aa20-5e82acff4b28"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liga Deportiva Cantonal de Salinas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="36" width="195" height="13" uuid="84ce424e-8488-4a20-b091-bed14616a0c8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[FUNDADA EL 7 DE AGOSTO DE 1947]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="49" width="296" height="14" uuid="860182a1-1c81-4dd4-a945-ad7fce83a73f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AFILIADA A LA FEDERACIÓN DEPORTIVA DE SANTA ELENA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="63" width="311" height="24" uuid="5063e337-446f-4b15-9cba-9893dfdd917a"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Avenida Carlos Espinoza Larrea - Estadio 'Dr. Camilo Gallegos'
+Teléfono: 2776324 - Email: ligadeportivacantonalsalinas@hotmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="87" width="230" height="14" uuid="1e210947-1675-403b-912a-c79576c95584"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salinas - Provincia de Santa Elena - Ecuador]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="439" y="102" width="86" height="17" uuid="a7b23f9a-9099-4e8d-9823-90207c59e45a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="15" y="13" width="70" height="99" uuid="c8446c69-ffa6-4dec-91e0-907a7e3eadb2"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="426" y="33" width="120" height="41" uuid="41d10ef7-09f2-4136-aebc-98cf7a4f97f6"/>
+				<imageExpression><![CDATA["logo ministerio3.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="182" y="113" width="203" height="25" uuid="32439863-1e24-41dc-9b2a-f5b1c0e5aea9"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[PLANILLA DE JUEGO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="3" width="55" height="14" uuid="718f5247-dcd4-47a2-a53e-7dea30f6ec1d"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="4" width="49" height="14" uuid="49a339f7-3fd6-4afc-bde7-04da64bccf76"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="22" width="41" height="20" uuid="cbd60ae3-a0ee-4120-a52d-a448b7cce6bf"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="22" width="75" height="19" uuid="5acfb0c2-771a-4111-aebf-d8ddba2b8d39"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORÍA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="3" width="195" height="17" uuid="18107d82-6696-4fd2-8484-96f6fa674a80"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cancha}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="74" y="23" width="100" height="18" uuid="56666cd8-a3d6-49af-9332-d608f30800e1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="3" width="100" height="16" uuid="f87d6c34-a035-456b-b323-b5ef1338cd33"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="23" width="100" height="18" uuid="bf59ac6b-68e3-47de-a57d-0034135a62ab"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomcategoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="46" width="189" height="22" uuid="d7299eb1-f067-4ae4-9f51-57724dc184fa"/>
+				<textElement textAlignment="Right">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{local}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="46" width="22" height="23" uuid="402263cd-7424-4934-821e-8bcc944b2c08"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{golesl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="46" width="213" height="22" uuid="de9aa11b-a524-4961-9296-fb84e0ab2c22"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{visitante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="47" width="28" height="22" uuid="63f600ff-96fb-4e42-bd62-33c1c9a401b0"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{golesv}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="258" y="60" width="10" height="1" uuid="586cb27c-99d6-459a-aa11-6946ef9e0118">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="10" y="1" width="532" height="1" uuid="b9985a4b-1cc6-4929-be58-4c5294dcf76a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="10" y="70" width="532" height="1" uuid="5a504fcc-ba63-4732-bc9e-4a8e205ba3b8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="542" y="1" width="1" height="69" uuid="4fd96be7-bd24-4e8e-813a-2c5ef9dd6e08">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="10" y="1" width="1" height="69" uuid="7bc73ce7-407a-4be8-a201-58ae8fd08555">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="10" y="19" width="532" height="1" uuid="ece60a59-95fc-4345-a9cd-5acad0cc5cd9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="10" y="44" width="532" height="1" uuid="2a5004d0-fd3a-4888-b04c-9593360f48d3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="444" splitType="Stretch">
+			<frame>
+				<reportElement x="-18" y="-24" width="246" height="80" uuid="113a055c-0fb3-4bc8-9e5b-422785e799e9"/>
+				<subreport>
+					<reportElement x="6" y="3" width="199" height="74" uuid="66a5d6f1-cce2-4f48-8f19-c65720998545"/>
+					<subreportParameter name="p_idpartido">
+						<subreportParameterExpression><![CDATA[$P{P_idpartido}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["rptDetalleEquipojugadorLocal.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<frame>
+				<reportElement x="272" y="-11" width="272" height="80" uuid="1aa7c721-8a85-44d3-ade6-e490ffd973d7"/>
+				<subreport>
+					<reportElement x="-1" y="-10" width="243" height="74" uuid="d9fc0cf0-fbb1-4000-8106-bbdac84b6575"/>
+					<subreportParameter name="P_idpartido">
+						<subreportParameterExpression><![CDATA[$P{P_idpartido}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["rptDetalleEquipojugadorvisitante.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<frame>
+				<reportElement x="-17" y="46" width="246" height="80" uuid="31e8d08f-30f2-4252-803f-177c78f1690e"/>
+				<subreport>
+					<reportElement x="7" y="7" width="200" height="63" uuid="6bedf90a-eb7a-4e30-a164-1ef2d58d8d11"/>
+					<subreportParameter name="P_idpartido">
+						<subreportParameterExpression><![CDATA[$P{P_idpartido}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["rptCambiosjugadoreslocal.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<frame>
+				<reportElement x="248" y="48" width="272" height="80" uuid="19d4725f-e378-4a79-9799-64680f7765a7"/>
+				<subreport>
+					<reportElement x="8" y="5" width="200" height="64" uuid="9cc9adf4-3b34-44ee-a9e3-dcb32064fa5f"/>
+					<subreportParameter name="P_idpartido">
+						<subreportParameterExpression><![CDATA[$P{P_idpartido}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["rptCambiosjugadoresvisitante.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<rectangle>
+				<reportElement mode="Transparent" x="10" y="250" width="532" height="180" uuid="e6720c43-7959-46f1-87ea-c39ae3316c1f"/>
+			</rectangle>
+			<textField>
+				<reportElement x="16" y="277" width="242" height="20" uuid="0b2cc5ec-90ef-4a97-a79f-7c083a3dc3e9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{novedadArbitroLocal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="254" width="166" height="22" uuid="1427766c-5665-4fdc-b9e6-2699c3f4e75c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOVEDADES DEL ARBITRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="254" width="194" height="17" uuid="bf1646ce-1f86-4190-a69d-a8a85b1abba8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOVEDADES DEL ARBITRO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="271" width="237" height="35" uuid="fb260281-8b6e-42e3-bf42-5d71795ada9e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{novedadArbitroVisitante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="428" y="325" width="60" height="19" uuid="2d8365ab-63b2-4fe0-804a-c49894ee1039"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ARBITRO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="386" y="322" width="145" height="1" uuid="74fda461-c635-4b37-9a74-909d91723c86">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="389" y="305" width="139" height="16" uuid="fda581f9-d3bb-4538-bc47-4670cb2e0b91"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arbitro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="348" width="228" height="18" uuid="1b38e415-5d01-4651-ad11-9a565ffbbbf7"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOVEDADES DEL VOCAL DE TURNO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="18" y="368" width="509" height="18" uuid="77932cc2-8a02-491e-b750-a1c03790bfc3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{novedadVocal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="409" y="410" width="102" height="14" uuid="24b91053-9a49-4540-94be-a9e2198fd121"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VOCAL DE TURNO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="385" y="407" width="145" height="1" uuid="9bd13409-ec04-420e-9fbc-9dc8ef6d27be">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="395" y="389" width="120" height="16" uuid="fbbeef3c-8ef1-4326-b71c-e35a1ddec7d4"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vocal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="276" y="250" width="1" height="93" uuid="17b0d63c-684e-4535-8ec0-d090104d3a84">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="10" y="343" width="532" height="1" uuid="a3b90605-c23a-4832-9b45-5d38f862a6df">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

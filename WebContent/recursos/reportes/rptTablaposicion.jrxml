@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptTablaposicion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6688373c-71b8-4a3d-9d01-71ef1061e997">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="nombreCampeonato" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT e.nombre as equipo, SUM(pj) as pj, SUM(pg) as pg, SUM(pe) as pe, SUM(pp) as pp, 
+	   SUM(gf) as gf, SUM(gc) as gc, SUM(gd) as gd,
+       SUM(ptos) as pts
+FROM tablaposiciones t, equipo e, detallecalendario d, calendario c, campeonato ca 
+WHERE t.id_detallecalendario = d.id_detallecalendario
+AND t.id_equipo = e.id_equipo
+AND d.id_calendario = c.id_calendario
+AND c.id_campeonato = ca.id_campeonato
+AND ca.nombreC =  $P{nombreCampeonato} 
+GROUP BY e.nombre
+ORDER BY pts DESC]]>
+	</queryString>
+	<field name="equipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="equipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="equipo"/>
+	</field>
+	<field name="pj" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="pj"/>
+	</field>
+	<field name="pg" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="pg"/>
+	</field>
+	<field name="pe" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="pe"/>
+	</field>
+	<field name="pp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="pp"/>
+	</field>
+	<field name="gf" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="gf"/>
+	</field>
+	<field name="gc" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="gc"/>
+	</field>
+	<field name="gd" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="gd"/>
+	</field>
+	<field name="pts" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="pts"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="122" splitType="Stretch">
+			<staticText>
+				<reportElement x="91" y="10" width="329" height="26" uuid="139f5b75-bf89-4988-8aa5-f01ce4a54ba1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liga Deportiva Cantonal de Salinas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="36" width="195" height="13" uuid="ee676a22-c1b4-421d-9c7d-2d9609459bb2"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[FUNDADA EL 7 DE AGOSTO DE 1947]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="49" width="296" height="14" uuid="4e780689-1a3a-4bec-ac15-4e05283a1f97"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AFILIADA A LA FEDERACIÓN DEPORTIVA DE SANTA ELENA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="63" width="311" height="24" uuid="cd342030-dd83-4d8e-97a4-ae96094ff743"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Avenida Carlos Espinoza Larrea - Estadio 'Dr. Camilo Gallegos'
+Teléfono: 2776324 - Email: ligadeportivacantonalsalinas@hotmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="87" width="230" height="14" uuid="b62ac0e7-6618-449d-9bb8-e4300acbb9ee"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salinas - Provincia de Santa Elena - Ecuador]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="430" y="105" width="106" height="17" uuid="fc24e45e-e74a-47aa-b07e-b65295ec4865"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="15" y="13" width="70" height="99" uuid="055a3686-7bf6-494e-99b2-11fb5de461b7"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="426" y="33" width="120" height="41" uuid="a7156d02-47bd-4c9b-872d-95f6d6c24ffa"/>
+				<imageExpression><![CDATA["logo ministerio3.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="10" width="92" height="17" uuid="343b1bc7-6b59-467b-84aa-cc093e745ffd"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Campeonato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="137" y="11" width="241" height="16" uuid="81cfb7e5-d34c-442f-8bf9-f46cb669f170"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreCampeonato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="206" y="41" width="124" height="20" uuid="7e4efdfd-f801-4454-bca5-76090fe1f745"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tabla Posiciones]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="93" y="4" width="47" height="17" uuid="2756458a-99fd-418b-bb47-f381db86dc39"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="4" width="29" height="17" uuid="48f19390-fc5f-4441-b57d-40a16dde266d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="4" width="29" height="17" uuid="a4665321-7dec-40e9-a0d0-881e6066d37d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="4" width="29" height="17" uuid="ab690e60-aee0-438c-975b-a67f62c0ec7d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="4" width="29" height="17" uuid="7b70823e-d420-4226-ac07-0c550b9ce672"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="4" width="29" height="17" uuid="5de811cf-6256-4a64-871d-3e8a68ca6e30"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="4" width="29" height="17" uuid="c99d95ae-7d25-4a7b-8dc8-898b52aa4ccc"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="4" width="29" height="17" uuid="48d3e05c-ebd4-4327-b6a8-a3995928cb53"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="504" y="4" width="29" height="17" uuid="d53e65e2-2efb-4881-ad26-ce5279110c73"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PTS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="17" y="1" width="521" height="1" uuid="5bf22412-2759-4492-b356-1051582009f9">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="17" y="24" width="521" height="1" uuid="c41dc199-f66d-4649-92d4-56a159509fa8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="16" y="1" width="1" height="23" uuid="3287a736-d307-44c5-856e-1a2f63308193">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="210" y="1" width="1" height="23" uuid="668aa08f-cd09-4c6a-bc61-49249fc44109">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="251" y="1" width="1" height="23" uuid="cb6c1d60-4dfb-48c1-b355-99162c2f86ac">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="293" y="1" width="1" height="23" uuid="b69a768a-413d-4acc-83f9-6c0c620367eb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="335" y="1" width="1" height="23" uuid="b3e540ee-f815-4456-a47e-a7edfbaf3b49">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="377" y="1" width="1" height="23" uuid="d264d06c-519c-4dd4-b158-c67ca7d7f41e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="416" y="1" width="1" height="23" uuid="8bdaa9ce-e354-4e09-a945-38bde60c9e62">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="456" y="1" width="1" height="23" uuid="d778e827-77af-49bf-9a68-0999d02474b2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="497" y="1" width="1" height="23" uuid="0e608672-22b4-4929-9308-4fb16a151bd9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="538" y="1" width="1" height="23" uuid="1c63c608-9928-444a-9b6a-3260df9a24b5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="23" y="2" width="177" height="17" uuid="5e7311d2-bf42-4e23-b6d6-303a01572cd9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b03f72b4-5f06-4f08-b3c0-7d09f96a7540"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{equipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="1" width="34" height="19" uuid="9c585e7c-379e-4d98-8a18-bdb2ae24f88b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce5156fa-47e0-4f8a-bad3-1a286f241a57"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="2" width="25" height="18" uuid="75cab629-5834-4a8b-b83b-5a1f11d1c1b5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c491c212-80fa-4444-a251-edc0e2329b38"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="2" width="32" height="17" uuid="bca819b9-422e-4cc6-8396-45e466a52dfa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a616d51-bf19-4623-8e5c-91f8648f1c9f"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="2" width="34" height="16" uuid="5f199fcd-7162-4327-80a3-1c0dab46c490">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60674eaf-6ae3-4a1e-a7e5-8155e18785bb"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="2" width="25" height="16" uuid="807169d4-5d2f-4805-991e-552d0c26c65a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e8d064d-3d24-4d81-96fe-b4a3bf3608b8"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="2" width="30" height="16" uuid="4a6c891e-bd9d-499f-bacd-4b043d346ec7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2650bb7c-8989-499a-b590-1f7b89748017"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="2" width="28" height="16" uuid="4c7af5ed-d7d1-4abf-9d1e-edef288dbde5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bedf0e5f-b390-42d7-8519-765a6277d886"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="505" y="2" width="28" height="16" uuid="7182a2bf-5b00-4ce3-8104-f37e8381a6e1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bae801f1-c613-4fe9-bcbf-70187469d271"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pts}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="17" y="21" width="521" height="1" uuid="083d1696-303b-4910-9430-bad1b9480554">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="16" y="-2" width="1" height="23" uuid="74528764-e6b2-4002-866f-e068b68aaba8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="538" y="-2" width="1" height="23" uuid="60acab42-e513-41dd-80a5-04c5b21e4edd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="210" y="-2" width="1" height="23" uuid="078b57bb-a63a-4334-8e19-a9eac3f0d651">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="251" y="-2" width="1" height="23" uuid="338d0757-cac2-4a88-b67b-e62a7749caaa">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="293" y="-2" width="1" height="23" uuid="dd1f0c97-81d1-49c9-846c-0e441e57f3f2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="335" y="-2" width="1" height="23" uuid="02f57d6c-8ce4-4e76-8c83-25bdc8e49e1b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="377" y="-2" width="1" height="23" uuid="ac80dce2-7d6c-4d56-b517-47f2e9a84fa9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="416" y="-2" width="1" height="23" uuid="43003a1c-7feb-4264-8db0-cada0dffa673">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="456" y="-2" width="1" height="23" uuid="2600e678-1774-4de1-8985-0ea2f5b6c18b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="497" y="-2" width="1" height="23" uuid="36d393f2-fd41-4f6a-98e6-03fa72084db7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="493" y="2" width="16" height="18" uuid="6593fec0-5d2c-49af-87db-90b8cfc53363"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="519" y="2" width="11" height="18" uuid="66f2da84-75fd-4ed4-bfbb-46556f81e302"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="509" y="2" width="10" height="18" uuid="dba700b6-443d-4a81-b612-89b3026dd641"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="2" width="40" height="18" uuid="56920d3b-eacf-4d1b-95a2-5ef6730af830"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

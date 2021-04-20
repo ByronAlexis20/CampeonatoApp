@@ -1,0 +1,75 @@
+<?page title="Resultados Partidos" contentType="text/html;charset=UTF-8"?>
+<?script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" ?>
+<zk>
+	<window id="winResultadoEditar" border="none" hflex="1" vflex="1"
+		viewModel="@id('vm') @init('ec.edu.upse.gcf.editar.PartidoEditar')"
+		style="padding: 0 0 0 0;background:#122BC7;"
+		apply="org.zkoss.bind.BindComposer">
+		<vlayout vflex="1" hflex="1">
+			<groupbox>
+				<hlayout>
+					<div>
+						<label
+							value="Para registrar nuevos resultados primero debe seleccionar el partido : *"
+							sclass="font-weight-bold col-form-label" style="color:red" />
+						<button label="Seleccionar partidos"
+							iconSclass="z-icon-search"
+							zclass="btn btn-outline-primary btn btn-sm"
+							onClick="@command('buscarPartido')" />
+					</div>
+				</hlayout>
+			</groupbox>
+			<hlayout>
+				<button id="btnEditar" label="Editar"
+					iconSclass="z-icon-pencil"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('editar')" />
+				<button id="btnEliminar" label="Eliminar"
+					iconSclass="z-icon-trash-o"
+					zclass="btn btn-outline-danger btn btn-sm"
+					onClick="@command('eliminar')" />
+			</hlayout>
+			<hlayout>
+				<textbox value="@bind(vm.textoBuscar)" hflex="1"
+					placeholder="Busqueda por nombre de Equipo"
+					style="text-transform:uppercase" />
+				<button label="Buscar!" iconSclass="z-icon-search"
+					zclass="btn btn-outline-primary btn btn-sm"
+					onClick="@command('buscar')" />
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstDetalleC" model="@load(vm.partidos)"
+					selectedItem="@bind(vm.partidoSeleccionado)" autopaging="true"
+					mold="paging" hflex="1" vflex="1">
+					<listhead>
+						<listheader label="fecha"
+							style="background:#122BC7;" width="100px" />
+						<listheader label="EquipoLocal"
+							style="background:#122BC7;" />
+						<listheader label="Goles"
+							style="background:#122BC7;" width="100px" />
+						<listheader label="EquipoVisitante"
+							style="background:#122BC7;" />
+						<listheader label="Goles"
+							style="background:#122BC7;" width="100px" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell
+								label="@load(each.detallecalendario.fecha) @converter('formatedDate',format='dd/MM/yyyy')" />
+							<listcell
+								label="@load(each.detallecalendario.equipoLocal.nombre)" />
+							<listcell
+								label="@load(each.resultadoequipoL)" />
+							<listcell
+								label="@load(each.detallecalendario.equipoVisitante.nombre)" />
+							<listcell
+								label="@load(each.resultadoequipoV)" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>
